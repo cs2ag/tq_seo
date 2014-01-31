@@ -108,7 +108,7 @@ class SitemapIndexHook {
         $pageData = array(
             'tstamp'                => $tstamp,
             'crdate'                => $tstamp,
-            'page_rootpid'          => \TQ\TqSeo\Utility\GeneralUtility::getRootPid(),
+            'page_rootpid'          => \TQ\TqSeo\Utility\GeneralUtility::getRootPid($GLOBALS['TSFE']->id),
             'page_uid'              => $GLOBALS['TSFE']->id,
             'page_language'         => $pageLanguage,
             'page_url'              => $pageUrl,
@@ -116,7 +116,6 @@ class SitemapIndexHook {
             'page_depth'            => count($GLOBALS['TSFE']->rootLine),
             'page_change_frequency' => $pageChangeFrequency,
         );
-
         // Call hook
         \TQ\TqSeo\Utility\GeneralUtility::callHook('sitemap-index-page', NULL, $pageData);
 
@@ -310,7 +309,7 @@ class SitemapIndexHook {
         $pageData = array(
             'tstamp'                => $tstamp,
             'crdate'                => $tstamp,
-            'page_rootpid'          => $rootline[0]['uid'],
+            'page_rootpid'          => \TQ\TqSeo\Utility\GeneralUtility::getRootPid((int)$linkConf['parameter']),
             'page_uid'              => $linkConf['parameter'],
             'page_language'         => $pageLanguage,
             'page_url'              => $pageUrl,

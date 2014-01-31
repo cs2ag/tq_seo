@@ -30,7 +30,7 @@ namespace TQ\TqSeo\Sitemap\Generator;
  * @author      Blaschke, Markus <blaschke@teqneers.de>
  * @package     tq_seo
  * @subpackage  lib
- * @version     $Id$
+ * @version     $Id: AbstractGenerator.php 81677 2013-11-21 12:32:33Z mblaschke $
  */
 abstract class AbstractGenerator {
     // ########################################################################
@@ -105,7 +105,7 @@ abstract class AbstractGenerator {
      */
     public function __construct() {
         // INIT
-        $this->rootPid = \TQ\TqSeo\Utility\GeneralUtility::getRootPid();
+        $this->rootPid = \TQ\TqSeo\Utility\GeneralUtility::getRootPid($GLOBALS['TSFE']->id);
         $sysLanguageId = NULL;
 
         $this->tsSetup = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.'];

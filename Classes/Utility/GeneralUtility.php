@@ -74,22 +74,20 @@ class GeneralUtility {
     public static function getRootPid($uid = NULL) {
         static $cache = array();
         $ret = NULL;
+			if ($uid === NULL) {
+				$ret = (int)$GLOBALS['TSFE']->rootLine[0]['uid'];
+			} else {
 
-        if ($uid === NULL) {
-            $ret = (int)$GLOBALS['TSFE']->rootLine[0]['uid'];
-        } else {
+				if (!isset($cache[$uid])) {
+				  $cache[$uid] = NULL;
+				  $rootline    = self::getRootLine($uid);
+				if (!empty($rootline[0])) {
+				      $cache[$uid] = $rootline[0]['uid'];
+				  }
+				}
 
-            if (!isset($cache[$uid])) {
-                $cache[$uid] = NULL;
-                $rootline    = self::getRootLine($uid);
-
-                if (!empty($rootline[0])) {
-                    $cache[$uid] = $rootline[0]['uid'];
-                }
-            }
-
-            $ret = $cache[$uid];
-        }
+				$ret = $cache[$uid];
+			}
 
         return $ret;
     }
@@ -112,15 +110,15 @@ class GeneralUtility {
     public static function getRootLine($uid = NULL) {
         static $cache = array();
         $ret = array();
-
+	    $host = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_HOST');
         if ($uid === NULL) {
             $ret = (int)$GLOBALS['TSFE']->rootLine;
         } else {
             if (!isset($cache[$uid])) {
-                $cache[$uid] = self::_getSysPageObj()->getRootLine($uid);
+                $cache[$uid] = self::_getSysPageObj()->getDomainStartPage($host);
             }
 
-            $ret = $cache[$uid];
+            $ret[]['uid'] = $cache[$uid];
         }
 
         return $ret;

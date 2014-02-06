@@ -111,7 +111,7 @@ abstract class AbstractGenerator {
         $this->tsSetup = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.'];
 
         // Language limit via setupTS
-        if (\TQ\TqSeo\Utility\GeneralUtility::getRootSettingValue('is_sitemap_language_lock', FALSE)) {
+        if (\TQ\TqSeo\Utility\GeneralUtility::getRootSettingValue('is_sitemap_language_lock', FALSE, $this->rootPid)) {
             $sysLanguageId = \TQ\TqSeo\Utility\GeneralUtility::getLanguageId();
         }
 

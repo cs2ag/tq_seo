@@ -106,7 +106,7 @@ class user_tqseo_sitemap_indexer {
 		$pageData = array(
 			'tstamp'				=> $tstamp,
 			'crdate'				=> $tstamp,
-			'page_rootpid'			=> tx_tqseo_tools::getRootPid(),
+			'page_rootpid'			=> tx_tqseo_tools::getRootPid($TSFE->id),
 			'page_uid'				=> $TSFE->id,
 			'page_language'			=> $pageLanguage,
 			'page_url'				=> $pageUrl,
@@ -307,12 +307,12 @@ class user_tqseo_sitemap_indexer {
 		$pageData = array(
 			'tstamp'				=> $tstamp,
 			'crdate'				=> $tstamp,
-			'page_rootpid'			=> $rootline[0]['uid'],
+			'page_rootpid'			=> tx_tqseo_tools::getRootPid((int)$linkConf['parameter']),
 			'page_uid'				=> $linkConf['parameter'],
 			'page_language'			=> $pageLanguage,
 			'page_url'				=> $pageUrl,
 			'page_hash'				=> md5($pageUrl),
-			'page_depth'			=> count($rootline),
+			'page_depth'			=> count($TSFE->rootLine),
 			'page_change_frequency'	=> $pageChangeFrequency,
 		);
 

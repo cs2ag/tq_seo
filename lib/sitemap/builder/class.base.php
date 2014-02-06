@@ -104,14 +104,16 @@ abstract class tx_tqseo_sitemap_builder_base {
 	public function __construct() {
 		global $TSFE, $TYPO3_DB, $TYPO3_CONF_VARS;
 
+		$rootPidList = array();
+
 		// INIT
-		$this->rootPid		= tx_tqseo_tools::getRootPid();
+		$this->rootPid		= tx_tqseo_tools::getRootPid($TSFE->id);
 		$sysLanguageId		= null;
 
 		$this->tsSetup		= $TSFE->tmpl->setup['plugin.']['tq_seo.']['sitemap.'];
 
 		// Language limit via setupTS
-		if( tx_tqseo_tools::getRootSettingValue('is_sitemap_language_lock', false) ) {
+		if( tx_tqseo_tools::getRootSettingValue('is_sitemap_language_lock', false,$this->rootPid) ) {
 			$sysLanguageId = tx_tqseo_tools::getLanguageId();
 		}
 

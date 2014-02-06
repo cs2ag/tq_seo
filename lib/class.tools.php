@@ -106,6 +106,7 @@ class tx_tqseo_tools {
 		return $TSFE->id;
 	}
 
+
 	/**
 	 * Get current root pid
 	 *
@@ -119,6 +120,12 @@ class tx_tqseo_tools {
 			$ret = (int)$TSFE->rootLine;
 		} else {
 			$ret = self::_getSysPageObj()->getRootLine($uid);
+		}
+		foreach($ret as $key => $value) {
+			if($value['is_siteroot']) {
+				$ret[0] = $value;
+				break;
+			}
 		}
 
 		return $ret;
@@ -172,7 +179,7 @@ class tx_tqseo_tools {
 		$ret = array();
 
 		if( $rootPid === null ) {
-			$rootPid	= self::getRootPid();
+			$rootPid	= self::getRootPid($TSFE->id);
 		}
 
 		$res = $TYPO3_DB->exec_SELECTquery(

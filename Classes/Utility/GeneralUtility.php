@@ -145,7 +145,7 @@ class GeneralUtility {
         $ret = array();
 
         $host = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_HOST');
-        $rootPid = self::getRootPid();
+        $rootPid = self::getRootPid($GLOBALS['TSFE']->id);
 
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
             '*',

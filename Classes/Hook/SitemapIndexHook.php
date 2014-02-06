@@ -267,6 +267,8 @@ class SitemapIndexHook {
         // #####################################
         $rootline = \TQ\TqSeo\Utility\GeneralUtility::getRootLine($uid);
 
+	    $domain = \TQ\TqSeo\Utility\GeneralUtility::getSysDomain();
+
         if (empty($rootline)) {
             return;
         }
@@ -277,6 +279,11 @@ class SitemapIndexHook {
         // Build relative url
         // #####################################
         $linkParts = parse_url($linkUrl);
+
+	    if($linkParts['host'] && ($linkParts['host'] != $domain['domainName'])) {
+		    return;
+	    }
+
         $pageUrl   = ltrim($linkParts['path'], '/');
         if (!empty($linkParts['query'])) {
             $pageUrl .= '?' . $linkParts['query'];

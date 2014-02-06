@@ -120,13 +120,13 @@ class GeneralUtility {
             }
 
             foreach($cache[$uid] as $key => $value) {
-							if($value['is_siteroot']) {
-							$cache[$uid][0] = $value;
-						}
-					}
-					$ret = $cache[$uid];
+				if($value['is_siteroot']) {
+					$cache[$uid][0] = $value;
+					break;
+				}
+			}
+			$ret = $cache[$uid];
         }
-
         return $ret;
     }
 

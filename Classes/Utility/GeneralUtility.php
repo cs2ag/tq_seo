@@ -107,18 +107,24 @@ class GeneralUtility {
      * @param   integer $uid    Page UID
      * @return  integer
      */
+     
     public static function getRootLine($uid = NULL) {
         static $cache = array();
         $ret = array();
-	    $host = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_HOST');
+
         if ($uid === NULL) {
             $ret = (int)$GLOBALS['TSFE']->rootLine;
         } else {
             if (!isset($cache[$uid])) {
-                $cache[$uid] = self::_getSysPageObj()->getDomainStartPage($host);
+                $cache[$uid] = self::_getSysPageObj()->getRootLine($uid);
             }
 
-            $ret[]['uid'] = $cache[$uid];
+            foreach($cache[$uid] as $key => $value) {
+							if($value['is_siteroot']) {
+							$cache[$uid][0] = $value;
+						}
+					}
+					$ret = $cache[$uid];
         }
 
         return $ret;

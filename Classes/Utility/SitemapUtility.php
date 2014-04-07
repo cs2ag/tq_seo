@@ -194,12 +194,25 @@ class SitemapUtility {
             return FALSE;
         }
 
-        while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-            $sitemapList[] = $row;
 
-            $sitemapPageId             = $row['page_uid'];
-            $typo3Pids[$sitemapPageId] = (int)$sitemapPageId;
-        }
+		$excludeParams = explode(',',$GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.']['excludeParams']);
+
+		while( $row = $TYPO3_DB->sql_fetch_assoc($res) ) {
+			if(is_array($excludeParams)){
+				foreach($excludeParams as $value) {
+					if(!strstr($row['page_url'],'/'.$value.'/') && $value) {
+						$sitemapList[] = $row;
+						$sitemapPageId = $row['page_uid'];
+						$typo3Pids[$sitemapPageId] = (int)$sitemapPageId;
+					}
+				}
+			} else {
+				$sitemapList[] = $row;
+				$sitemapPageId = $row['page_uid'];
+				$typo3Pids[$sitemapPageId] = (int)$sitemapPageId;
+			}
+		}
+
 
         if (!empty($typo3Pids)) {
             $query = 'SELECT *

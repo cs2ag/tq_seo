@@ -190,8 +190,10 @@ class tx_tqseo_sitemap {
 		if( !$res ) {
 			return false;
 		}
-
-		$excludeParams = explode(',',$GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.']['excludeParams']);
+		
+		if($GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.']['excludeParams']) {
+			$excludeParams = explode(',',$GLOBALS['TSFE']->tmpl->setup['plugin.']['tq_seo.']['sitemap.']['excludeParams']);
+		}
 
 		while( $row = $TYPO3_DB->sql_fetch_assoc($res) ) {
 			if(is_array($excludeParams)){
